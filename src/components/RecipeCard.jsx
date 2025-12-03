@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-function RecipeCard({ title, cookTime, ingredients }) {
+function RecipeCard({ id, title, cookTime, ingredients, onDelete }) {
   const [showIngredients, setShowIngredients] = useState(false);
-  function toggleIngredients() {
+  const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
-  }
+  };
   return (
     <div
       style={{
@@ -29,6 +29,7 @@ function RecipeCard({ title, cookTime, ingredients }) {
           </ul>
         </>
       )}
+      <button onClick={() => onDelete(id)}>Delete</button>
     </div>
   );
 }

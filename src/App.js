@@ -5,9 +5,12 @@ import recipeData from "./data/recipe";
 
 function App() {
   const [recipes, setRecipes] = useState(recipeData);
-  function HandleAddRecipe(recipe) {
+  const HandleAddRecipe = (recipe) => {
     setRecipes([...recipes, recipe]);
-  }
+  };
+  const HandleDelete = (id) => {
+    setRecipes(recipes.filter((item) => item.id !== id));
+  };
   return (
     <div>
       <h1>Recipe App</h1>
@@ -15,9 +18,11 @@ function App() {
       {recipes.map((item) => (
         <RecipeCard
           key={item.id}
+          id={item.id}
           title={item.title}
           cookTime={item.cookTime}
           ingredients={item.ingredients}
+          onDelete={HandleDelete}
         ></RecipeCard>
       ))}
     </div>
