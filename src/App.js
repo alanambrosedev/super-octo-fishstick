@@ -9,6 +9,8 @@ function App() {
   const [editTitle, setEditTitle] = useState("");
   const [editCookTime, setEditCookTime] = useState("");
   const [editIngredients, setEditIngredients] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [sortBy, setSortBy] = useState("");
   const HandleAddRecipe = (recipe) => {
     setRecipes([...recipes, recipe]);
   };
@@ -36,11 +38,35 @@ function App() {
     setEditRecipe(null);
   };
 
+  const filterRecipes = recipes.filter((item) =>
+    item.title.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const sortedRecipe = [...filterRecipes].sort((a, b) => {
+    if (sortBy === "title_asc") {
+      return a.title.localeCompare(b.title);
+    }
+    if (sortBy === "title_desc") {
+      return b.title.localeCompare(a.title);
+    }
+    return 0;
+  });
   return (
     <div>
       <h1>Recipe App</h1>
+      <input
+        type="text"
+        placeholder="Search recipes"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+      <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <option value="none">No Sort</option>
+        <option value="title_asc">Title (A-Z)</option>
+        <option value="title_desc">Title (Z-A)</option>
+      </select>
       <AddRecipe onAdd={HandleAddRecipe}></AddRecipe>
-      {recipes.map((item) => (
+      {sortedRecipe.map((item) => (
         <RecipeCard
           key={item.id}
           id={item.id}
