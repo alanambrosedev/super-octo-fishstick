@@ -2,9 +2,16 @@ import { useState } from "react";
 
 function RecipeCard({ id, title, cookTime, ingredients, onDelete, onEdit }) {
   const [showIngredients, setShowIngredients] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
+
   const toggleIngredients = () => {
     setShowIngredients(!showIngredients);
   };
+
+  const toggleFavourite = () => {
+    setIsFavourite(!isFavourite);
+  };
+
   return (
     <div
       style={{
@@ -29,6 +36,9 @@ function RecipeCard({ id, title, cookTime, ingredients, onDelete, onEdit }) {
           </ul>
         </>
       )}
+      <button onClick={toggleFavourite}>
+        {isFavourite ? "❤️ Favorite" : "🤍 Mark as Favorite"}
+      </button>
       <button onClick={() => onEdit(id)}>Edit</button>
       <button onClick={() => onDelete(id)}>Delete</button>
     </div>
